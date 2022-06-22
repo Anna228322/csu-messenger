@@ -55,10 +55,18 @@ html = """
                 messages.appendChild(message)
             };
             function sendMessage(event) {
-                var input = document.getElementById("messageText")
-                ws.send(input.value)
-                input.value = ''
                 event.preventDefault()
+                var input = document.getElementById("messageText")
+                const json_request_body = JSON.stringify({
+                    user_id: 1,
+                    chat_id: 1,
+                    text: input.value,
+                    edited: false,
+                    read: false
+                });
+                console.log(json_request_body);
+                fetch(`/message/`, {method: 'POST', headers: { "Content-Type": "application/json" }, body: json_request_body})
+                input.value = ''
             }
         </script>
     </body>
